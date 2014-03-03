@@ -26,7 +26,13 @@
 
     <property name="build.dir" value="build" />
     <property name="src.dir" value="src" />
-    
+
+    <!-- Property File -->
+    <property file="build.properties" />
+
+    <target name="set-proxy">
+      <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}" nonproxyhosts=""/>
+    </target>
     
     <target name="download-ivy" unless="skip.download">
       <mkdir dir="${ivy.jar.dir}"/>
