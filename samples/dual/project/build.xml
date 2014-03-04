@@ -1,0 +1,71 @@
+<project name="dual-ivy" default="run" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <!-- some variables used -->
+    <property name="lib.dir" value="${basedir}/lib" />
+    <property name="build.dir" value="${basedir}/build" />
+    <property name="src.dir" value="${basedir}/src" />
+    
+    <!-- ivy properties used -->
+    <property name="ivy.settings.dir" value="../settings" />
+
+    <!-- Property File -->
+    <property file="build.properties" />
+
+    <!-- paths used for compilation and run  -->
+    <path id="lib.path.id">
+        <fileset dir="${lib.dir}" />
+    </path>
+    <path id="run.path.id">
+        <path refid="lib.path.id" />
+        <path location="${build.dir}" />
+    </path>
+    
+    <ivy:settings file="${ivy.settings.dir}/ivysettings.xml" />
+
+    <target name="set-proxy">
+      <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}" nonproxyhosts=""/>
+    </target>    
+
+    <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve" description="--> resolve and retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
+    
+    <!-- ================================= 
+          target: report              
+         ================================= -->
+    <target name="report" depends="resolve" description="--> generates a report of dependencies">
+        <ivy:report todir="${build.dir}"/>
+    </target>
+    
+    <!-- ================================= 
+          target: run
+         ================================= -->
+    <target name="run" depends="resolve" description="--> compile and run the project">
+        <mkdir dir="${build.dir}" />
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="lib.path.id" includeAntRuntime="false"/>
+        <java classpathref="run.path.id" classname="example.Hello"/>
+    </target>
+    
+    <!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean" description="--> clean the project">
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}">
+	      <exclude name="src/**" />
+	      <exclude name="build.xml" />
+	      <exclude name="ivy.xml" />
+	      <exclude name="build.properties" />
+	    </fileset>
+	</delete>
+    </target>
+    
+    <!-- ================================= 
+          target: clean-cache              
+         ================================= -->
+    <target name="clean-cache" description="--> clean the ivy cache">
+      <ivy:cleancache />
+    </target>
+</project>
