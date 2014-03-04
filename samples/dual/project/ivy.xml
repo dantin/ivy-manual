@@ -1,0 +1,7 @@
+<ivy-module version="1.0">
+    <info organisation="org.apache" module="dual-ivy"/>
+    <dependencies>
+        <dependency org="commons-httpclient" name="commons-httpclient" rev="2.0.2"/>
+        <dependency org="commons-lang" name="commons-lang" rev="2.0"/>
+    </dependencies>
+</ivy-module>
