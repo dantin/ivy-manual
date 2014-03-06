@@ -1,0 +1,8 @@
+build
+clean
+clean-cache
+clean-local
+publish
+report
+resolve
+test
