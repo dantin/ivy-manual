@@ -1,0 +1,7 @@
+build
+clean
+clean-cache
+report
+resolve
+run-cc
+run-hm
